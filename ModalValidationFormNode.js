@@ -17,7 +17,7 @@ var localStrategies = require('./Strategies');
 passport.use("local-log-in",localStrategies.localStrategyLogin);
 passport.use("local-sign-up",localStrategies.localStrategySignUp);
 
-app.use(passport.initialize());
+app.use(passport.initialize());  
 
 app.get("/register",
     function(request,response){
