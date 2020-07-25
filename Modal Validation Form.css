@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,500&display=swap');
+.Modal__Form__container{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: #e9eaea;
+}
+
+.form{
+    width: 450px;
+    margin: 200px auto;
+    background-color: white;
+}
+
+.content{
+    text-align: center;
+}
+
+.table__user__data{
+    display: none;
+    height: 300px;
+    width: 500px;
+    margin: 300px auto;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.signup{
+    background: #fff;
+    float: left;
+}
+
+.login{
+    background: #e9eaea;
+    float: right;
+}
+
+.signup,.login{
+    display: inline;
+    width: 50%;
+    line-height: 60px;
+    cursor: pointer;
+    margin-bottom: 40px;
+}
+
+.sign_up_form div input,.log_in_form div input{
+    padding: 20px;
+    border: 2px solid #e9eaea;
+    width: 80%;
+    width: 326px;
+}   
+
+.sign_up_form{
+    box-sizing: border-box;
+    padding: 40px;
+}
+
+.submit_button,.login_button{
+    width: 100%;
+    background: #34b3a0;
+    height: 60px;
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: none;
+}
+
+.log_in_form{
+    display: none;
+    font-family: 'Open Sans', sans-serif;
+    box-sizing: border-box;
+    padding: 40px;
+}
+
+.error{
+    visibility: hidden;
+    margin-bottom: 15px;
+    color: #e74c3c;
+    float: left;
+}
+
+.error_login{
+    visibility: hidden;
+    margin-bottom: 15px;
+    color: #e74c3c;
+    float: left;
+}
+
+.circle__element__positive{
+    position: relative;
+    color: #999;
+    bottom: 58px;
+    left: 150px;
+    visibility: hidden;
+    font-weight: 900;
+}
+
+.circle__element__positive::before{
+    position: fixed;
+    content:"\2705";
+}
+
+.circle__element__negative{
+    position: relative;
+    color: #999;
+    bottom: 58px;
+    left: 150px;
+    visibility: hidden;
+    font-weight: 900;
+}
+
+.circle__element__negative::before{
+    position: fixed;
+    content:"\274E";
+}
