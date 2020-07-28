@@ -7,4 +7,5 @@ create table users(
     password varchar(88)
 );
 select * from users;
+Select * from users where username = "" and email = "";
 drop database FormDataBase;

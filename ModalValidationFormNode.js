@@ -4,6 +4,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const { body, validationResult} = require('express-validator');
 var passwordHash = require('password-hash');
+var session = require("express-session");
 
 app.set("view engine", "hbs");
 app.use(express.static(__dirname));
@@ -11,11 +12,19 @@ app.use(bodyParser.json());
 var urlencodedParser = bodyParser.urlencoded({extended: true});
 app.use(urlencodedParser);
 
+app.use(session({ cookie: { maxAge: 60000 }, 
+  secret: 'woot',
+  resave: false, 
+  saveUninitialized: false}));
+
+const flash = require("connect-flash");
+app.use(flash());
+
 const passport = require('passport');
 
 var localStrategies = require('./Strategies');
-passport.use("local-log-in",localStrategies.localStrategyLogin);
-passport.use("local-sign-up",localStrategies.localStrategySignUp);
+passport.use("local-log-in", localStrategies.localStrategyLogin);
+passport.use("local-sign-up", localStrategies.localStrategySignUp);
 
 app.use(passport.initialize());  
 
@@ -24,42 +33,27 @@ app.get("/register",
         response.render("Modal Validation Form.hbs");   
     }); 
 
-app.post("/register", [//validation
-    body("username","Username is empty!").not().isEmpty(),
-    body("email","Email is invalid!").isEmail(),
-    body("password","Password must be atleast 10 characters!").isLength({ min: 10, max: 20})],
-    function(request, response){
-        //get user data from form
-        var username = request.body.username;
-        var email = request.body.email;
-        var password = request.body.password;
-        console.log("username: ", username); 
-        console.log("email: ", email);
-        console.log("password: ", password);
-        //hashed password
-        var hashedPassword = passwordHash.generate(password);
-        console.log("Hashed password: ", hashedPassword);
-        const errors = validationResult(request);
-        //create struct user
-        
-        if (!errors.isEmpty()) {
-            console.log("errors:", JSON.stringify(errors.array()));
-        }
-        else{
+app.post("/register",function(req, res, next) {
+  passport.authenticate('local-sign-up', function(err, user, info) {
+    if (err) { return next(err); }
+    if (!user) { return console.log("User exists!");}
+    
+    res.render("User.hbs", 
+    {
+      username: req.body.username,
+    });
 
-            //check existing accounts with same username or email
-
-        }
+    console.log("The user was found!");
+  })(req, res, next);     
 });
     
-
     app.get("/login",function(req,res){
     });
 
     app.post('/login', function(req, res, next) {
         passport.authenticate('local-log-in', function(err, user, info) {
           if (err) { return next(err); }
-          if (!user) { return console.log("User is not found!");}
+          if (!user) { return console.log("User does not exist!");}
           res.render("User.hbs", 
           {
             username: req.body.username,

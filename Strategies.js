@@ -13,11 +13,8 @@ const connection = mysql.createConnection({
   });
 
 var localStrategyLogin = new LocalStrategy({
-    usernameField: 'username',
-    passwordField: 'password',
-    session: false
+
 },function(username, password, done){
-    var passwordLength = 10;
     var Hashedpassword = passwordHash.generate(password);
     console.log(username);
     
@@ -42,20 +39,21 @@ var localStrategyLogin = new LocalStrategy({
 
 //signup strategy
 var localStrategySignUp = new LocalStrategy({
-    usernameField: 'username',
-    passwordField: 'password',
-    emailField: "email",
-    session: false
-}, function(username, password, email, done){
-    var Hashedpassword = passwordHash.generate(password);
-    connection.query("Select * from users where username = ? and email = ?", [username, email], function(err, results){
+    session: false,
+    passReqToCallback: true
+}, function(req, username, password, done){
+    var email = req.body.email;
+    console.log(email);
+    var hashedPassword = passwordHash.generate(password);
+    connection.query("Select * from users where username = ? and email= ?", [username, email], function(err, results){
         console.log("Registrated users: ", results);
         if(results == ""){
             var user = {
                 username,
                 email,
-                password
+                hashedPassword
             }
+            
             //insert user data in sql table with sql query
             const sql = "insert into users(username, email, password) values(?, ?, ?)";
             connection.query(sql, [user.username, user.email, user.hashedPassword], function(err,results){
@@ -84,12 +82,13 @@ var localStrategySignUp = new LocalStrategy({
                     console.log('Email sent: ' + info.response);
                 }
             });
+            return done(null, user); 
         }
         else{
             console.log("User with this username or email exists!");
+            return done(null, false, req.flash('User with this username or email exists!'));
         }
 
-        return done(null, user); 
     });
 });
 
