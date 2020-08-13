@@ -8,6 +8,8 @@
     <body>
         <script src="../jquery-3.4.1.min.js"></script>
         <script src="Modal Validation Form.js"></script>
+        <script src="../Ajax eror messages.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
         <div class="Modal__Form__container">
             <div class="form">
                 <div class="content">
@@ -31,9 +33,9 @@
                             <p class="circle__element__positive"></p>
                             <p class="circle__element__negative"></p>
                             <small class = "error">Error</small>
-                            <p>{{error}}</p>
+                            <p class = "error_server"></p>
                         </div>
-                        <input class="submit_button" type="submit"value="CREATE ACCOUNT"/>
+                        <input class="submit_button" type="submit" value="CREATE ACCOUNT"/>
                     </form>
 
                     <form class = "log_in_form" id="validation-form-login" method="post" action="/login">
@@ -48,6 +50,7 @@
                             <p class="circle__element__positive"></p>
                             <p class="circle__element__negative"></p>
                             <small class = "error">Error</small>
+                            <p class = "error_login"></p>
                         </div>
                         <input class="login_button" type="submit" value="LOG IN"/>
                     </form>

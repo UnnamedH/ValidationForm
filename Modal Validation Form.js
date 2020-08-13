@@ -35,17 +35,6 @@ $(document).ready(function(){
         $(".sign_up_form").css("display","block");
     });
 
-    /*function getDataFromForm(form,value){
-        var formData = new FormData(form[0]);
-        var arrayData = new Array();
-        if(value){
-            arrayData[0] = formData.get("username");
-            arrayData[1] = formData.get("email");
-            arrayData[2] = formData.get("password");
-            $(".form").remove();
-            fillTheTable(arrayOfData);
-        }
-    }*/
     function fillTheTable(arrayData){
         $(".table__user__data").append("Username: ",arrayData[0],"<br>");
         $(".table__user__data").append("Email: ",arrayData[1],"<br>");
@@ -65,19 +54,29 @@ $(document).ready(function(){
         if(name.length < 1){
             setError($("#username"), "The field is required");
             value = false; 
+            e.preventDefault();
         }
         else{
-            setCheckMarkUp($("#username"));   
+            if(name.length < 6){
+                setError($("#username"), "Username must be atleast 6 characters!");
+                value = false; 
+                e.preventDefault();
+            }
+            else{
+                setCheckMarkUp($("#username"));   
+            }
         }
         if(email.length < 1){
             setError($("#email"), "The field is required");
             value = false;
+            e.preventDefault();
         }
         else{
             var validEmail = regEx.test(email);
             if(!validEmail){
                 setError($("#email"),"The email is invalid!");
                 value = false;
+                e.preventDefault();
             }
             else{
                 setCheckMarkUp($("#email"));  
@@ -86,6 +85,7 @@ $(document).ready(function(){
         if(password.length < passwordLength){
             setError($("#password"),"Password must be atleast 10 characters!");
             value = false;
+            e.preventDefault();
         }
         else{
             setCheckMarkUp($("#password"));  
@@ -103,14 +103,22 @@ $(document).ready(function(){
         if(name.length < 1){
             setError($("#username_login"), "The field is required");
             value = false; 
+            e.preventDefault();
         }
         else{
-            setCheckMarkUp($("#username_login"));   
+            if(name.length < 6){
+                setError($("#username_login"), "Username must be atleast 6 characters!");
+                value = false; 
+                e.preventDefault();
+            }
+            else{
+                setCheckMarkUp($("#username_login"));
+            }
         }
-
         if(password.length < passwordLength){
-            setError($("#password_login"),"Password must be atleast 8 characters!");
+            setError($("#password_login"),"Password must be atleast 10 characters!");
             value = false;
+            e.preventDefault();
         }
         else{
             setCheckMarkUp($("#password_login"));  

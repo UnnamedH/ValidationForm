@@ -45,7 +45,7 @@ var localStrategySignUp = new LocalStrategy({
     var email = req.body.email;
     console.log(email);
     var hashedPassword = passwordHash.generate(password);
-    connection.query("Select * from users where username = ? and email= ?", [username, email], function(err, results){
+    connection.query("Select * from users where username = ? or email= ?", [username, email], function(err, results){
         console.log("Registrated users: ", results);
         if(results == ""){
             var user = {
@@ -86,7 +86,7 @@ var localStrategySignUp = new LocalStrategy({
         }
         else{
             console.log("User with this username or email exists!");
-            return done(null, false, req.flash('User with this username or email exists!'));
+            return done(null, false);
         }
 
     });

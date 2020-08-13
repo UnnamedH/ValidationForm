@@ -82,11 +82,20 @@
     float: left;
 }
 
-.error_login{
-    visibility: hidden;
-    margin-bottom: 15px;
-    color: #e74c3c;
+.error_server{
+    padding-left: 40px;
     float: left;
+    margin-top: 0px;
+    color: #e74c3c;
+    font-size: 14px;
+}
+
+.error_login{
+    padding-left: 20px;
+    float: left;
+    margin-top: 0px;
+    color: #e74c3c;
+    font-size: 13px;
 }
 
 .circle__element__positive{
