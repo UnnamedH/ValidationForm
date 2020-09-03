@@ -3,6 +3,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const passwordHash = require("password-hash");
 const mysql = require("mysql");
+const axios = require('axios').default;
 
 //login strategy
 const connection = mysql.createConnection({
@@ -12,9 +13,17 @@ const connection = mysql.createConnection({
     password: "zlatodima"
   });
 
-var localStrategyLogin = new LocalStrategy({
+  const connectionSession = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    database: "sessionStorage",
+    password: "zlatodima"
+  });
 
-},function(username, password, done){
+var localStrategyLogin = new LocalStrategy({
+    session: true,
+    passReqToCallback: true
+},function(req, username, password, done){
     var Hashedpassword = passwordHash.generate(password);
     console.log(username);
     
@@ -29,17 +38,20 @@ var localStrategyLogin = new LocalStrategy({
             console.log("Incorrect password!");
             return done(null, false, 'Incorrect password.');
         }
+        var id = req.sessionID;
         var user = {
+            id,
             username,
             password
         }
+        console.log("Session id till serialize: ", id);
         return done(null, user); 
     });
 });
 
 //signup strategy
 var localStrategySignUp = new LocalStrategy({
-    session: false,
+    session: true,
     passReqToCallback: true
 }, function(req, username, password, done){
     var email = req.body.email;
@@ -88,11 +100,30 @@ var localStrategySignUp = new LocalStrategy({
             console.log("User with this username or email exists!");
             return done(null, false);
         }
-
     });
 });
 
+passport.serializeUser(function(user, done) {
+    connectionSession.query("insert into sessions(sessionId) values(?)", [user.id], function(err,results){if(err) console.log(err);});
+    console.log("Session id after serialize: ", user.id);
+    done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+    /*axios.get(`http://localhost:3000/users/${id}`)
+  .then(res => done(null, res.data) )
+  .catch(error => done(error, false))*/
+  connectionSession.query("Select * from sessions where sessionId = ?", id, function(err,results){
+      if(err) console.log(err);
+      var user = results[0];
+      console.log("Founded User by id: ", user);
+      done(null, user);
+    });
+  
+});
+
 connection.connect();
+connectionSession.connect();
 
 module.exports = {
     localStrategyLogin,

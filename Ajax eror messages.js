@@ -8,8 +8,7 @@ $(document).ready(function(){
 
             socket.on('message-login', (data) => {
                 $(".error_login").text(data);
-                //$(".error_login").css({"visibility":"visible"})
             });
     });
-    
 });
+
