@@ -4,7 +4,8 @@
   "description": "No description",
   "main": "Modal Validation Form.js",
   "scripts": {
-    "test": "node"
+    "test": "node",
+    "start": "ModalValidationFormNode.js"
   },
   "repository": {
     "type": "git",
@@ -35,6 +36,7 @@
     "express-validator": "^6.6.1",
     "googleapis": "^39.2.0",
     "hbs": "^4.1.1",
+    "heroku": "^7.42.13",
     "knex": "^0.21.2",
     "mongoose": "^5.9.25",
     "mysql": "^2.18.1",
