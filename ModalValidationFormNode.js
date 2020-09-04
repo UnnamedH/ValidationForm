@@ -125,7 +125,7 @@ io.on('connection', (socket) => {
     });
 
     app.get("/", function(req, res){
-        res.send("image");
+        res.redirect("/register");
     });
 
     function checkAuthentication(req,res,next){
@@ -138,6 +138,6 @@ io.on('connection', (socket) => {
       }
     }
 
-http.listen(process.env.PORT || 3000);
+http.listen(3000);
 
 
