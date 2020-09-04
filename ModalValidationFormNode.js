@@ -124,6 +124,10 @@ io.on('connection', (socket) => {
       res.redirect('/register');
     });
 
+    app.get("/", function(req, res){
+        res.send("image");
+    });
+
     function checkAuthentication(req,res,next){
       if(req.isAuthenticated()){
         console.log("isAuthenticated!");
@@ -133,6 +137,7 @@ io.on('connection', (socket) => {
           res.send("Page is not found!");
       }
     }
+
 http.listen(process.env.PORT || 3000);
 
 
