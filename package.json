@@ -2,6 +2,10 @@
   "name": "modalvalidationform",
   "version": "1.0.0",
   "description": "No description",
+  "engines": {
+    "node": "12.18.2",
+    "npm": "6.14.5"
+  },
   "main": "Modal Validation Form.js",
   "scripts": {
     "test": "node",
