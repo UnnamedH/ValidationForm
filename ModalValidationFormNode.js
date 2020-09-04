@@ -133,6 +133,6 @@ io.on('connection', (socket) => {
           res.send("Page is not found!");
       }
     }
-http.listen(process.env.PORT);
+http.listen(process.env.PORT || 3000);
 
 

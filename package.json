@@ -5,7 +5,7 @@
   "main": "Modal Validation Form.js",
   "scripts": {
     "test": "node",
-    "start": "ModalValidationFormNode.js"
+    "start": "node ModalValidationFormNode.js"
   },
   "repository": {
     "type": "git",
